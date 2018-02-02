@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top(style='height:70px')
+    .container.text-uppercase(style='font-family: "Cabin"; font-weight: bold')
+      .navbar-nav.d-flex.justify-content-begin
+        a.nav-item.nav-link.active(href='#') Home 
+          span.sr-only (current)       
+        a.nav-item.nav-link(href='#') Features
+        a.nav-item.nav-link(href='#') Pricing
+        a.nav-item.nav-link(href='#') Disabled
+      .navbar-nav.d-flex.justify-content-end
+        a.nav-item.nav-link(href='#') Blue Team '15
+        a(href='#')
+          img.img-fluid(src='img/logo-small.png' height='40' width='40')
+
+
+
+
+  .container-fluid
+    h1.text-secondary Hello
+      
