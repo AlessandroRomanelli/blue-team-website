@@ -3,9 +3,10 @@ var concat = require("gulp-concat");
 var uglify = require("gulp-uglify");
 var imagemin = require("gulp-imagemin");
 var cleanCSS = require("gulp-clean-css");
+var sass = require("gulp-sass");
 var sourcemaps = require("gulp-sourcemaps");
 var del = require("del");
-// var pump = require("pump");
+var pump = require("pump");
 var imageResize = require("gulp-image-resize");
 var parallel = require("concurrent-transform");
 // var os = require("os");
@@ -13,6 +14,7 @@ var parallel = require("concurrent-transform");
 var paths = {
   scripts: "src/scripts/*.js",
   css: "src/styles/*.css",
+  sass: "src/styles/sass/*.scss",
   images: "src/img/**/*"
 };
 
@@ -23,21 +25,28 @@ gulp.task("clean", function() {
   return del(["public"]);
 });
 
-// gulp.task("scripts", ["clean"], function(cb) {
-//   // Minify and copy all JavaScript (except vendor scripts)
-//   // with sourcemaps all the way down
-//   pump(
-//     [
-//       gulp.src(paths.scripts),
-//       uglify(),
-//       concat("all.min.js"),
-//       gulp.dest("build/js")
-//     ],
-//     cb
-//   );
-// });
+gulp.task("scripts", function(cb) {
+  // Minify and copy all JavaScript (except vendor scripts)
+  // with sourcemaps all the way down
+  pump(
+    [
+      gulp.src(paths.scripts),
+      uglify(),
+      concat("all.min.js"),
+      gulp.dest("public/javascripts")
+    ],
+    cb
+  );
+});
 
-gulp.task("minify-css", ["clean"], function() {
+gulp.task('compile-sass', function() {
+  return gulp
+    .src(paths.sass)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('src/styles'));
+});
+
+gulp.task("minify-css", ["compile-sass"], function() {
   return gulp
     .src(paths.css)
     .pipe(sourcemaps.init())
@@ -48,12 +57,14 @@ gulp.task("minify-css", ["clean"], function() {
 });
 
 // Copy all static images
-gulp.task("images", ["clean"], function() {
+gulp.task("images", function() {
   return (gulp
-      .src(paths.images)
-      // Pass in options to the task
-      .pipe(imagemin({ optimizationLevel: 7 }))
-      .pipe(gulp.dest("public/img")) );
+    .src(paths.images)
+    // Pass in options to the task
+    .pipe(imagemin({
+      optimizationLevel: 7
+    }))
+    .pipe(gulp.dest("public/img")));
 });
 
 // gulp.task("screenshots-thumbnails", ["images"], function() {
@@ -76,7 +87,8 @@ gulp.task("images", ["clean"], function() {
 
 // Rerun the task when a file changes
 gulp.task("watch", function() {
-  // gulp.watch(paths.scripts, ["scripts"]);
+  gulp.watch(paths.scripts, ["scripts"]);
+  gulp.watch(paths.sass, ["compile-sass"]);
   gulp.watch(paths.css, ["minify-css"]);
   gulp.watch(paths.images, ["images"]);
 });
@@ -84,7 +96,7 @@ gulp.task("watch", function() {
 // The default task (called when you run `gulp` from cli)
 gulp.task("default", [
   "watch",
-  // "scripts",
+  "scripts",
   "minify-css",
   "images"
   // "screenshots-thumbnails"

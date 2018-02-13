@@ -1,22 +1,92 @@
 extends layout
 
 block content
-  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top(style='height:70px')
-    .container.text-uppercase(style='font-family: "Cabin"; font-weight: bold')
-      .navbar-nav.d-flex.justify-content-begin
-        a.nav-item.nav-link.active(href='#') Home 
-          span.sr-only (current)       
-        a.nav-item.nav-link(href='#') Features
-        a.nav-item.nav-link(href='#') Pricing
-        a.nav-item.nav-link(href='#') Disabled
-      .navbar-nav.d-flex.justify-content-end
-        a.nav-item.nav-link(href='#') Blue Team '15
-        a(href='#')
-          img.img-fluid(src='img/logo-small.png' height='40' width='40')
-
-
-
-
   .container-fluid
-    h1.text-secondary Hello
-      
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+      .container.text-uppercase
+        .navbar-nav.d-flex.justify-content-begin
+          a.nav-item.nav-link.active(href='#') Home 
+            span.sr-only (current)
+          a.nav-item.nav-link(href='#') La Squadra
+          a.nav-item.nav-link(href='http://www.volleycat.ch/', target='_blank') Il Campionato
+          a.nav-item.nav-link(href='/contatti') Contatti
+        .navbar-nav.d-flex.justify-content-end
+          span.nav-item.align-self-center Blue Team '15
+          a(href='/')
+            img.logo-small.img-fluid(src='img/logo-small.png' height='40' width='40')
+
+  .title-screen
+    .container.d-flex.justify-content-end.align-items-center
+      .mr-auto
+        img.img(src='img/logo.png' width='350')
+      .text-white.text-right
+        .display-4 Benvenuto sul nostro sito!
+        .lead Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+  .about
+    .w-100.my-3.px-3.d-flex
+      .join.bg-primary.mr-2.w-100.text-white.rounded.px-5.py-3
+        .join-text.position-relative.text-center
+          h1.text-uppercase.cabin-font.mt-3 Vuoi giocare con noi?
+          p.mt-3.text-justify Donne, uomini, ragazze, ragazzi, veterani e principianti: che tu sia in cerca di una squadra dal clima rilassato o che tu sia la prossima stella della pallavolo poco importa:
+          p.lead.text-secondary Noi dei Blue accogliamo tutti, a qualsiasi livello
+          p.text-justify Al tempo stesso, partecipando al campionato 
+            b CAT 
+            | ci teniamo a presentare la formazione più competitiva possibile.
+          a#join-us.btn.btn-lg.btn-secondary.text-uppercase.cabin-font.heartbeat.mb-4(href='#') Iscriviti Ora
+      .info.bg-secondary.ml-2.w-100.rounded.px-5.py-3
+        .info-text.position-relative.text-center
+          h1.text-uppercase.cabin-font.mt-3 Prossima partita in:
+          .countdown.d-flex.justify-content-around.align-items-center
+            #weeks.countdown-container.oswald-font
+              p 00
+              p Settimane
+            .separator
+            #days.countdown-container.oswald-font
+              p 00
+              p Giorni
+            .separator
+            #hours.countdown-container.oswald-font
+              p 00
+              p Ore
+            .separator
+            #minutes.countdown-container.oswald-font
+              p 00
+              p Minuti
+            .separator
+            #seconds.countdown-container.oswald-font
+              p 00
+              p Secondi
+          .row.mt-3
+            .col-4
+              .ranking
+                h4.cabin-font.text-uppercase Posizione:
+                p.display-1.oswald-font #{position}
+                  sup(style='font-size: 50%; top: -1em') i
+            .col-8
+              h4.cabin-font.text-uppercase Ultimi Risultati:
+              table.last-matches.table.table-sm.table-striped.table-dark.rounded
+                thead
+                  th Data
+                  th.text-left Avversari
+                  th Risultato
+                tbody
+                  each row in lastMatches
+                    tr
+                      td #{row[3]}
+                      td.text-left 
+                        if (row[1] == 'Blue')
+                          | #{row[2]}
+                        else 
+                          | #{row[1]}
+                      if (row[1] == 'Blue')
+                        if (row[4] > row[5])
+                          td.bg-success #{row[4]} - #{row[5]}
+                        else
+                          td.bg-danger #{row[4]} - #{row[5]}
+                      else 
+                        if (row[4] < row[5])
+                          td.bg-success #{row[5]} - #{row[4]}
+                        else
+                          td.bg-danger #{row[5]} - #{row[4]}
+  script.
+    var nextMatch = new Date(#{nextMatch})

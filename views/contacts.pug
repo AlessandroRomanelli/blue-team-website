@@ -1,0 +1,49 @@
+extends layout
+
+block content
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+    .container.text-uppercase
+      .navbar-nav.d-flex.justify-content-begin
+        a.nav-item.nav-link(href='/') Home 
+        a.nav-item.nav-link(href='#') La Squadra
+        a.nav-item.nav-link(href='http://www.volleycat.ch/', target='_blank') Il Campionato
+        a.nav-item.nav-link.active(href='/contatti') Contatti
+          span.sr-only (current)
+      .navbar-nav.d-flex.justify-content-end
+        span.nav-item.align-self-center Blue Team '15
+        a(href='/')
+          img.logo-small.img-fluid(src='img/logo-small.png' height='40' width='40')
+  iframe#maps(src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1386.8509277159953!2d8.916277786085862!3d45.95723961200568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47842cf5290a30a1%3A0xa7a74d79e8a84900!2sVia+Alniscioni+5%2C+6917+Lugano%2C+Svizzera!5e0!3m2!1sit!2sit!4v1518516056482', frameborder='0', style='border:0', allowfullscreen='')
+  .container
+    #contacts.row
+      .col-4.text-white.d-flex
+        .media.align-items-center
+          img.img-fluid.mr-4(src='img/clock.svg' height='100' width='100')
+          .media-body
+            h4.mt-0.cabin-font.text-uppercase I nostri orari
+            p.m-0 Allenamenti:
+            p.m-0 
+              b Lunedì
+              | , 20:00 - 22:00
+            p.m-0 
+              b Mercoledì
+              | , 20:00 - 22:00
+      .col-4.text-white.d-flex
+        .media.align-items-center
+          img.img-fluid.mr-4(src='img/book.svg' height='100' width='100')
+          .media-body
+            h4.mt-0.cabin-font.text-uppercase Recapiti Telefonici
+            p.m-0 
+              b Gianni
+              | : 076 305 98 49
+            p.m-0 
+              b Pinotto
+              | : 075 230 60 32
+      .col-4.text-white.d-flex
+        .media.align-items-center
+          img.img-fluid.mr-4(src='img/email.svg' height='100' width='100')
+          .media-body
+            h4.mt-0.cabin-font.text-uppercase Dove scriverci
+            p 
+              b E-Mail
+              | : justatest@gmail.com

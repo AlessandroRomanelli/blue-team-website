@@ -1,6 +1,193 @@
+// Variables
 $dark: #1d2731;
 $light: #0b3c5d;
 $primary: #328cc1;
 $secondary: #d9b310;
+$font-family-sans-serif: 'Raleway';
+@import "includes/heartbeat", "../../../node_modules/bootstrap/scss/bootstrap";
+@mixin before-background($background-url, $opacity) {
+  position: relative;
 
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: $opacity;
+    background-image: url($background-url);
+    background-position: 50% 50%;
+    background-size: cover;
+  }
+}
+@mixin center-absolutely {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@mixin multiply-background($background-url, $color, $opacity) {
+  @include before-background($background-url, $opacity);
+
+  &::before {
+    background-blend-mode: multiply;
+    background-color: $color;
+  }
+}
+// Mixins
+// Utility Classes
+
+.cabin-font {
+  font-family: 'Cabin', sans-serif;
+}
+
+.oswald-font {
+  font-family: 'Oswald', sans-serif;
+}
+
+body {
+  padding-top: 70px;
+}
+
+nav {
+  height: 70px;
+  border-bottom: 2px solid $primary;
+  font-family: 'Cabin';
+  font-weight: bold;
+
+  .navbar-nav {
+    span {
+      padding-right: 15px;
+      color: white;
+      font-size: 1.5em;
+      cursor: default;
+    }
+
+    .nav-item {
+      transition: 0.25s ease-in-out;
+
+      &:not(:last-of-type) {
+        padding-right: 30px;
+      }
+    }
+  }
+
+  img.logo-small {
+    transition: 0.25s ease-in-out;
+
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+}
+
+.title-screen {
+  @include before-background("../img/volleyball.jpg", 0.65);
+  height: 350px;
+  border-bottom: 2px solid $primary;
+  background-color: $light;
+
+  .container {
+    position: relative;
+  }
+
+  img {
+    display: block;
+  }
+}
+
+.join {
+  @include multiply-background('../img/training.jpg', $light, 0.66);
+
+  h1 {
+    border-bottom: 3px solid $secondary;
+  }
+
+  #join-us {
+    transition: 0.25s ease-in-out;
+
+    &:hover {
+      color: $light;
+    }
+  }
+}
+
+.info {
+  @include multiply-background('../img/volleymatch.jpg', $secondary, 0.15);
+
+  table {
+    tr {
+      &:nth-of-type(2) {
+        opacity: 0.75;
+      }
+
+      &:nth-of-type(3) {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+.countdown {
+  div {
+    display: inline-block;
+  }
+
+  .countdown-container {
+    box-sizing: content-box;
+    padding: 5px 0;
+    height: 75px;
+    width: 15%;
+    min-width: 70px;
+    color: white;
+    background: $dark;
+    border-radius: 5px;
+
+    p {
+      margin: 0;
+      text-transform: uppercase;
+
+      &:first-of-type {
+        line-height: 50px;
+        font-size: 2.5em;
+      }
+    }
+  }
+
+  .separator {
+    font-family: sans-serif;
+    margin: 0 5px;
+    font-size: 3em;
+
+    &::after {
+      content: ':';
+    }
+  }
+
+  .ranking {
+    p {
+      color: red;
+      top: -1em;
+      font-size: 50%;
+    }
+  }
+}
+
+iframe#maps {
+  width: 100%;
+  height: calc(100vh - 300px);
+}
+
+#contacts.row {
+  position: relative;
+  top: -5px;
+
+  .col-4 {
+    height: 200px;
+
+    h4 {
+      color: $secondary;
+    }
+  }
+}
